@@ -9,9 +9,12 @@ canvas {
 }
 
 #hand-grid {
-  /* display: grid; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   /* grid-template-columns: 50% 50%; */
-  max-height: calc(100vw / 2);
+  height: 100vh;
+  width: 100vw;
   position: relative;
 }
 #hand-images {
@@ -19,7 +22,7 @@ canvas {
   position: absolute;
   height: min(100vw, 100vh);
   width: min(100vw, 100vh);
-  width: 100%;
+  /* width: 100%; */
   z-index: 0;
   filter: grayscale() contrast(1.4);
 }
@@ -28,7 +31,7 @@ canvas {
   position: absolute;
   height: min(100vw, 100vh);
   width: min(100vw, 100vh);
-  width: 100%;
+  /* width: 100%; */
   z-index: 1;
 
   /* mix-blend-mode: screen; */
@@ -41,6 +44,10 @@ video {
   position: absolute;
   top: 0;
   left: 0;
+
+  object-fit: cover;
+  /* height: min(100vw, 100vh);
+  width: min(100vw, 100vh); */
   /* z-index: 2; */
   /* filter: grayscale() contrast(1) brightness(1); */
   /* filter: grayscale() contrast(1); */
@@ -54,7 +61,7 @@ video {
   top: 0;
   left: 0;
   z-index: 1;
-  /* background: rgba(252, 244, 74, 1); */
+  /* background:` rgba(252, 244, 74, 1); */
   width: 100%;
   height: 100%;
   /* mix-blend-mode: darken;
