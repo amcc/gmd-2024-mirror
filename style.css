@@ -1,0 +1,73 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+canvas {
+  display: block;
+}
+
+#hand-grid {
+  /* display: grid; */
+  /* grid-template-columns: 50% 50%; */
+  max-height: calc(100vw / 2);
+  position: relative;
+}
+#hand-images {
+  /* background-color: blue; */
+  position: absolute;
+  height: min(100vw, 100vh);
+  width: min(100vw, 100vh);
+  width: 100%;
+  z-index: 1;
+  filter: grayscale() contrast(1.4);
+  mix-blend-mode: screen;
+}
+#canvas-container {
+  overflow: hidden;
+  position: absolute;
+  height: min(100vw, 100vh);
+  width: min(100vw, 100vh);
+  width: 100%;
+  z-index: 0;
+  /* filter: blur(3px) saturate(0.4) brightness(1.1); */
+  /* mix-blend-mode: screen; */
+}
+
+video {
+  transform: scaleX(-1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  /* filter: grayscale() contrast(1) brightness(1); */
+  /* filter: grayscale() contrast(1); */
+
+  filter: blur(4px) saturate(0.4) brightness(1.1);
+  /* brightness(1.3) */
+}
+
+#tint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  /* background: rgba(252, 244, 74, 1); */
+  width: 100%;
+  height: 100%;
+  /* mix-blend-mode: darken;
+  mix-blend-mode: color; */
+  mix-blend-mode: overlay;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 6em;
+  margin: 1em 0.3em 1em 1em;
+}
+
+#hand-images img {
+  width: 100%;
+  height: auto;
+}
