@@ -45,36 +45,41 @@
       </div>
       <div id="hand-images">
         <!-- video -->
-        <video id="gesture-video" autoplay loop muted>
-          <source src="videos/fist.mp4" type="video/mp4" />
+        <video
+          id="gesture-video"
+          autoplay
+          loop
+          muted
+          src="videos/fist.mp4"
+          type="video/mp4"
+        ></video>
+      </div>
+      <div id="preload">
+        <video preload="auto" src="videos/palm.mp4" type="video/mp4"></video>
+        <video preload="auto" src="videos/love.mp4" type="video/mp4"></video>
+        <video
+          preload="auto"
+          src="videos/point-up.mp4"
+          type="video/mp4"
+        ></video>
+        <video preload="auto" src="videos/palm.mp4" type="video/mp4">
+          <source />
         </video>
+        <video
+          preload="auto"
+          src="videos/thumbs-down.mp4"
+          type="video/mp4"
+        ></video>
+        <video
+          preload="auto"
+          src="videos/thumbs-up.mp4"
+          type="video/mp4"
+        ></video>
+        <video preload="auto" src="videos/victory.mp4" type="video/mp4"></video>
       </div>
     </div>
 
     <div id=""></div>
     <script src="sketch.js"></script>
-    <div id="preload">
-      <video preload>
-        <source src="videos/palm.mp4" type="video/mp4" />
-      </video>
-      <video preload>
-        <source src="videos/love.mp4" type="video/mp4" />
-      </video>
-      <video preload>
-        <source src="videos/point-up.mp4" type="video/mp4" />
-      </video>
-      <video preload>
-        <source src="videos/palm.mp4" type="video/mp4" />
-      </video>
-      <video preload>
-        <source src="videos/thumbs-down.mp4" type="video/mp4" />
-      </video>
-      <video preload>
-        <source src="videos/thumbs-up.mp4" type="video/mp4" />
-      </video>
-      <video preload>
-        <source src="videos/victory.mp4" type="video/mp4" />
-      </video>
-    </div>
   </body>
 </html>

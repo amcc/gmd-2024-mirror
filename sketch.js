@@ -70,89 +70,62 @@ let positionShift = {
 
 let image;
 
-function setup() {
-  let canvasParent = select("#canvas-container");
-  let canvas = createCanvas(canvasParent.width, canvasParent.width);
-  canvas.parent("#canvas-container");
-  captureWebcam();
-  // handImage = select("#gesture-image");
-  handVideo = select("#gesture-video");
-  console.log("handVideo", handVideo);
-}
+const sketch = (p5) => {
+  p5.setup = () => {
+    let canvasParent = p5.select("#canvas-container");
+    let canvas = p5.createCanvas(canvasParent.width, canvasParent.width);
+    canvas.parent("#canvas-container");
+    captureWebcam(p5);
+    // handImage = select("#gesture-image");
+    handVideo = p5.select("#gesture-video");
+    console.log("handVideo", handVideo);
+  };
 
-function draw() {
-  // background(255);
-  clear();
+  p5.draw = () => {
+    // background(255);
+    p5.clear();
 
-  if (!mediaPipe.loaded && frameCount > 30) {
-    textAlign(CENTER, CENTER);
-    textFont("Roboto");
-    textSize(width / 12);
-    text(
-      "loading gestures",
-      width / 2,
-      height / 2 + (sin(frameCount / 80) * height) / 15
-    );
-  }
-  // flip the webcam image so it looks like a mirror
-  push();
-  scale(-1, 1); // mirror webcam
-  // image(capture, -capture.width, 0); // draw webcam
-  scale(-1, 1); // unset mirror
-  pop();
-  if (mediaPipe.gestures.length > 0) {
-    if (gestureDictionary[mediaPipe.gestures[0][0].categoryName]) {
-      // text(
-      //   gestureDictionary[mediaPipe.gestures[0][0].categoryName].name,
-      //   10,
-      //   100
-      // );
-      if (gestureState !== mediaPipe.gestures[0][0].categoryName) {
-        gestureState = mediaPipe.gestures[0][0].categoryName;
-        if (mediaPipe.gestures[0][0].categoryName !== "none") {
-          let gestureVideo = handVideo.elt;
-          gestureVideo.pause();
-          gestureVideo.children[0].src =
-            gestureDictionary[mediaPipe.gestures[0][0].categoryName].video;
-          gestureVideo.load();
-          gestureVideo.play();
-          clear();
+    if (!mediaPipe.loaded && p5.frameCount > 30) {
+      p5.textAlign(CENTER, CENTER);
+      p5.textFont("Roboto");
+      p5.textSize(width / 12);
+      p5.text(
+        "loading gestures",
+        width / 2,
+        height / 2 + (sin(frameCount / 80) * height) / 15
+      );
+    }
+    // flip the webcam image so it looks like a mirror
+    // p5.push();
+    // p5.scale(-1, 1); // mirror webcam
+    // // image(capture, -capture.width, 0); // draw webcam
+    // p5.scale(-1, 1); // unset mirror
+    // p5.pop();
+    if (mediaPipe.gestures.length > 0) {
+      if (gestureDictionary[mediaPipe.gestures[0][0].categoryName]) {
+        if (gestureState !== mediaPipe.gestures[0][0].categoryName) {
+          gestureState = mediaPipe.gestures[0][0].categoryName;
+          if (mediaPipe.gestures[0][0].categoryName !== "none") {
+            let gestureVideo = handVideo.elt;
+            gestureVideo.pause();
+            gestureVideo.src =
+              gestureDictionary[mediaPipe.gestures[0][0].categoryName].video;
+            gestureVideo.load();
+            gestureVideo.play();
+          }
         }
       }
     }
-  }
-  // landmarks contain an array of hands
-  if (mediaPipe.landmarks.length > 0) {
-    mediaPipe.landmarks.forEach((hand, index) => {
-      // each hand contains an array of finger/knuckle positions
+  };
 
-      // handedness stores if the hands are right/left
-      let handedness = mediaPipe.handednesses[index][0].displayName;
-
-      // if using a front camera hands are the wrong way round so we flip them
-      handedness === "Right" ? (handedness = "Left") : (handedness = "Right");
-
-      // lets colour each hand depeding on whether its the first or second hand
-      handedness === "Right" ? fill(255, 0, 0) : fill(0, 255, 0);
-
-      hand.forEach((part, index) => {
-        // each part is a knuckle or section of the hand
-        // we have x, y and z positions so we could also do this in 3D (WEBGL)
-        if (index === 8) {
-          textSize(30);
-          // text(
-          //   handedness,
-          //   ...getFlipPos(part, positionShift.x + 20, positionShift.y)
-          // );
-        }
-        // circle(
-        //   ...getFlipPos(part, positionShift.x, positionShift.y),
-        //   part.z * 100
-        // );
-      });
-    });
-  }
-}
+  // resize the canvas when the window is resized
+  // also reset the camera dimensions
+  p5.windowResized = () => {
+    let canvasParent = p5.select("#canvas-container");
+    p5.resizeCanvas(canvasParent.width, canvasParent.width);
+    setCameraDimensions(p5);
+  };
+};
 
 // return flipped x and y positions
 function getFlipPos(part, xAdd = 0, yAdd = 0) {
@@ -166,8 +139,8 @@ function getFlipPos(part, xAdd = 0, yAdd = 0) {
 // before we start predicting landmarks. Creatcapture has a callback which is
 // only called when the video is correctly loaded. At that point we set the dimensions
 // and start predicting landmarks
-function captureWebcam() {
-  capture = createCapture(
+function captureWebcam(p5) {
+  capture = p5.createCapture(
     {
       audio: false,
       video: {
@@ -176,12 +149,12 @@ function captureWebcam() {
     },
     function (e) {
       captureEvent = e;
-      console.log(captureEvent.getTracks()[0].getSettings());
+      // console.log(captureEvent.getTracks()[0].getSettings());
       // do things when video ready
       // until then, the video element will have no dimensions, or default 640x480
       capture.srcObject = e;
 
-      setCameraDimensions();
+      setCameraDimensions(p5);
       mediaPipe.predictWebcam(capture);
     }
   );
@@ -193,27 +166,21 @@ function captureWebcam() {
 // this function sets the dimensions of the video element to match the
 // dimensions of the camera. This is important because the camera may have
 // different dimensions than the default video element
-function setCameraDimensions() {
+function setCameraDimensions(p5) {
   // resize the capture depending on whether
   // the camera is landscape or portrait
 
   let ratio = capture.width / capture.height;
 
   if (capture.width > capture.height) {
-    capture.size(height * ratio, height);
-    positionShift.x = (width - height * ratio) / 2;
+    capture.size(p5.height * ratio, p5.height);
+    positionShift.x = (p5.width - p5.height * ratio) / 2;
     capture.position(positionShift.x, 0);
   } else {
-    capture.size(width, width / ratio);
-    positionShift.y = (height - width / ratio) / 2;
+    capture.size(p5.width, p5.width / ratio);
+    positionShift.y = (p5.height - p5.width / ratio) / 2;
     capture.position(0, positionShift.y);
   }
 }
 
-// resize the canvas when the window is resized
-// also reset the camera dimensions
-function windowResized() {
-  let canvasParent = select("#canvas-container");
-  resizeCanvas(canvasParent.width, canvasParent.width);
-  setCameraDimensions();
-}
+let myp5 = new p5(sketch);

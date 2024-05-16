@@ -17,7 +17,8 @@ canvas {
   width: 100vw;
   position: relative;
 }
-#hand-images {
+#hand-images,
+#preload {
   /* background-color: blue; */
   position: absolute;
   height: min(100vw, 100vh);
@@ -26,6 +27,9 @@ canvas {
   z-index: 0;
   filter: grayscale() contrast(1.4);
   background-color: white;
+}
+#preload {
+  z-index: -1000;
 }
 
 #hand-images video {
