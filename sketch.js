@@ -92,7 +92,7 @@ const sketch = (p5) => {
       p5.text(
         "loading gestures",
         p5.width / 2,
-        p5.height / 2 + (sin(p5.frameCount / 80) * p5.height) / 15
+        p5.height / 2 + (p5.sin(p5.frameCount / 80) * p5.height) / 15
       );
     }
     // flip the webcam image so it looks like a mirror
