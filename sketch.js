@@ -10,6 +10,8 @@
 
 let capture;
 let captureEvent;
+let handImage, handVideo;
+let gestureState = "none";
 
 // dictionary of possible gestures
 let gestureDictionary = {
@@ -21,36 +23,43 @@ let gestureDictionary = {
     name: "Closed Fist",
     description: "Fingers are closed",
     image: "images/closed-fist.jpg",
+    video: "videos/fist.mp4",
   },
   Open_Palm: {
     name: "Open Palm",
     description: "Hand is open",
     image: "images/open-palm.jpg",
+    video: "videos/palm.mp4",
   },
   Pointing_Up: {
     name: "Pointing Up",
     description: "Index finger is pointing up",
     image: "images/pointing-up.jpg",
+    video: "videos/point-up.mp4",
   },
   Thumb_Down: {
     name: "Thumb Down",
     description: "Thumb is pointing down",
     image: "images/thumbs-down.jpg",
+    video: "videos/thumbs-down.mp4",
   },
   Thumb_Up: {
     name: "Thumb Up",
     description: "Thumb is pointing up",
     image: "images/thumbs-up.jpg",
+    video: "videos/thumbs-up.mp4",
   },
   Victory: {
     name: "Victory",
     description: "Index and middle finger are up",
     image: "images/victory.jpg",
+    video: "videos/victory.mp4",
   },
   ILoveYou: {
     name: "I Love You",
     description: "Index, middle and ring fingers are up",
     image: "images/love.jpg",
+    video: "videos/love.mp4",
   },
 };
 
@@ -66,8 +75,9 @@ function setup() {
   let canvas = createCanvas(canvasParent.width, canvasParent.width);
   canvas.parent("#canvas-container");
   captureWebcam();
-  handImage = select("#gesture-image");
-  console.log(handImage);
+  // handImage = select("#gesture-image");
+  handVideo = select("#gesture-video");
+  console.log("handVideo", handVideo);
 }
 
 function draw() {
@@ -97,9 +107,17 @@ function draw() {
       //   10,
       //   100
       // );
-      if (mediaPipe.gestures[0][0].categoryName !== "none") {
-        handImage.elt.src =
-          gestureDictionary[mediaPipe.gestures[0][0].categoryName].image;
+      if (gestureState !== mediaPipe.gestures[0][0].categoryName) {
+        gestureState = mediaPipe.gestures[0][0].categoryName;
+        if (mediaPipe.gestures[0][0].categoryName !== "none") {
+          let gestureVideo = handVideo.elt;
+          gestureVideo.pause();
+          gestureVideo.children[0].src =
+            gestureDictionary[mediaPipe.gestures[0][0].categoryName].video;
+          gestureVideo.load();
+          gestureVideo.play();
+          clear();
+        }
       }
     }
   }

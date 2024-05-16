@@ -27,25 +27,18 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-
-    <link rel="preload" as="image" href="images/love.jpg" />
-    <link rel="preload" as="image" href="images/closed-fist.jpg" />
-    <link rel="preload" as="image" href="images/open-palm.jpg" />
-    <link rel="preload" as="image" href="images/pointing-up.jpg" />
-    <link rel="preload" as="image" href="images/thumbs-down.jpg" />
-    <link rel="preload" as="image" href="images/thumbs-up.jpg" />
-    <link rel="preload" as="image" href="images/victory.jpg" />
   </head>
   <body>
-    <main>
-      <h1>mirror</h1>
-    </main>
+    <main></main>
     <div id="hand-grid">
       <div id="canvas-container">
         <div id="tint"></div>
       </div>
       <div id="hand-images">
-        <img src="images/love.jpg" id="gesture-image" alt="gesture" />
+        <!-- video -->
+        <video id="gesture-video" autoplay loop muted>
+          <source src="videos/fist.mp4" type="video/mp4" />
+        </video>
       </div>
     </div>
 
