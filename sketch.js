@@ -86,13 +86,13 @@ const sketch = (p5) => {
     p5.clear();
 
     if (!mediaPipe.loaded && p5.frameCount > 30) {
-      p5.textAlign(CENTER, CENTER);
+      p5.textAlign(p5.CENTER, p5.CENTER);
       p5.textFont("Roboto");
-      p5.textSize(width / 12);
+      p5.textSize(p5.width / 12);
       p5.text(
         "loading gestures",
-        width / 2,
-        height / 2 + (sin(frameCount / 80) * height) / 15
+        p5.width / 2,
+        p5.height / 2 + (sin(p5.frameCount / 80) * p5.height) / 15
       );
     }
     // flip the webcam image so it looks like a mirror
